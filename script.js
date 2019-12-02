@@ -1,4 +1,5 @@
 const context = new AudioContext();
+var img = new Image();
 
 let canvas = null;
 let context2D = null;
