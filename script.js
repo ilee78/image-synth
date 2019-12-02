@@ -1,5 +1,10 @@
-/* If you're feeling fancy you can add interactivity 
-    to your site with Javascript */
+const context = new AudioContext();
 
-// prints "hi" in the browser's dev tools console
-console.log("hi");
+let canvas = null;
+let context2D = null;
+
+const setup = async () => {
+  canvas = document.getElementByID('image');
+  context2D = canvas.getContext('2d');
+}
+window.addEventListener('load', setup, {once: true});
