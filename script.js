@@ -1,5 +1,5 @@
 const context = new AudioContext();
-const imageData = [];
+var imageData = [];
 const image = new Image();
 
 let canvas = null;
