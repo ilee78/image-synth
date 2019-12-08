@@ -9,6 +9,7 @@ const frequencyData = new Float32Array(2048);
 
 var image = new Image();
 image.crossOrigin = "Anonymous";
+
 const r = [];
 const g = [];
 const b = [];
@@ -19,9 +20,11 @@ let canvas = null;
 let context2D = null;
 let redAnalyzer = null;
 let redContext = null;
+let userPick = null;
 
 const chooseImage = (event) => {
-
+  //if(event.srcElement.getElementById == "Galaxy") console.log("true");
+  console.log(event.srcElement.id);
 }
 
 const handleStart = (event) => {
@@ -129,13 +132,15 @@ const setup = () => {
   const vanButton = document.querySelector('#Van-Gogh');
   const buttonElement = document.querySelector('#start');
   
+  
+  
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
   image.onload();
   
   redAnalyzer = document.querySelector('#red-analyzer');
   redContext = redAnalyzer.getContext('2d');
   
-  //galaxyButton.addEventListener('click', chooseImage("Galaxy"), {once:true});
+  galaxyButton.addEventListener('click', chooseImage, {once:true});
 
   
   buttonElement.addEventListener('click', handleStart, {once: true});
