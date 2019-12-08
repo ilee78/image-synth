@@ -22,8 +22,9 @@ image.onload = function() {
   image.crossOrigin = "Anonymous";
   context2D.drawImage(image, 0, 0);
   imageData = context2D.getImageData(0, 0, 200, 200).data;
-  createPixelArrays(imageData); 
+  // createPixelArrays(imageData); 
 }
+
 
 const createPixelArrays = (imageData) => {
   // separating into RGBA arrays
@@ -58,7 +59,7 @@ const createPixelArrays = (imageData) => {
     const greenAvg = greenSum / 100;
     const blueAvg = blueSum / 100;
     const alphaAvg = alphaSum / 100;
-    r.push(redAvg);
+    r[i/100] = redAvg;
     g[i] = greenAvg;
     b[i] = blueAvg;
     a[i] = alphaAvg;
@@ -67,7 +68,7 @@ const createPixelArrays = (imageData) => {
   soundModule.output.connect(context.destination);
   soundModule.play(r);
   
-  // console.log(r);
+  console.log(r);
   // console.log(g);
   // console.log(b);
   // console.log(a);
@@ -80,5 +81,7 @@ const setup = async () => {
   
   const buttonElement = document.querySelector('#start');
   buttonElement.addEventListener('click', handleStart, {once: true});
+  const loadButton = document.querySelector('#load');
+  loadButton.addEventListener('click', createPixelArray, {once: true});
 }
 window.addEventListener('load', setup, {once: true});
