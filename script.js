@@ -1,10 +1,10 @@
 const context = new AudioContext();
 
 const image = new Image();
-const red = [];
-const green = [];
-const blue = [];
-const alpha = [];
+const r = [];
+const g = [];
+const b = [];
+const a = [];
 var imageData = new ImageData(200, 200);
 
 let canvas = null;
@@ -25,6 +25,10 @@ image.onload = function() {
 
 const createPixelArrays = (imageData) => {
   // separating into RGBA arrays
+  const red = [];
+  const green = [];
+  const blue = [];
+  const alpha = [];
   for(let i = 0; i < imageData.length; i += 4) {
     let index = i / 4;
     red[index] = imageData[i];
@@ -34,16 +38,33 @@ const createPixelArrays = (imageData) => {
   }
   // averaging 100 values at a time
   for(let i = 0; i < 40000; i += 100) {
-    
-    red.slice(i, i + 99);
-    green.slice(i, i + 99);
-    blue.slice(i, i + 99);
-    
+    const redSlice = red.slice(i, i + 99);
+    const greenSlice = green.slice(i, i + 99);
+    const blueSlice = blue.slice(i, i + 99);
+    const alphaSlice = alpha.slice(i, i + 99);
+    var redSum = 0;
+    var greenSum = 0;
+    var blueSum = 0;
+    var alphaSum = 0;
+    for(let j = 0; j < redSlice.length; j++) {
+      redSum += redSlice[j];
+      greenSum += greenSlice[j];
+      blueSum += blueSlice[j];
+      alphaSum += alphaSlice[j];
+    }
+    const redAvg = redSum / 100;
+    const greenAvg = greenSum / 100;
+    const blueAvg = blueSum / 100;
+    const alphaAvg = alphaSum / 100;
+    r[i] = redAvg;
+    g[i] = greenAvg;
+    b[i] = blueAvg;
+    a[i] = alphaAvg;
   }
-  console.log(red);
-  console.log(green);
-  console.log(blue);
-  console.log(alpha);
+  console.log(r);
+  console.log(g);
+  console.log(b);
+  console.log(a);
 }
 
 
