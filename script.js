@@ -1,7 +1,11 @@
 import SoundModule from './SoundModule.js';
+import TSDataPlayer from './TSDataPlayer.js';
 
 const context = new AudioContext();
 
+const osc = new OscillatorNode(context);
+const amp = new GainNode(context);
+osc.connect(amp).connect(context.destination);
 
 const image = new Image();
 const r = [];
@@ -68,9 +72,11 @@ const createPixelArrays = (imageData) => {
     b[i/100] = blueAvg;
     a[i/100] = alphaAvg;
   }
-  const soundModule = new SoundModule(context, r, g, b, a);
-  soundModule.output.connect(context.destination);
-  soundModule.play(r);
+  const player = new TSDataPlayer(context, r);
+  playSound(player);
+  // const soundModule = new SoundModule(context, r, g, b, a);
+  // soundModule.output.connect(context.destination);
+  // soundModule.play(r);
   
   //console.log(r);
   // console.log(g);
@@ -78,6 +84,18 @@ const createPixelArrays = (imageData) => {
   // console.log(a);
 }
 
+function playSound(player) {
+  player.setBPM(100);
+  player.onbeat = (value, start, duration) => {
+      const parameter = value * 10;
+      osc.frequency.value = parameter;
+      amp.gain.setValueAtTime(0.0, start);
+      amp.gain.linearRampToValueAtTime(0.25, start + 1.0);
+      amp.gain.linearRampToValueAtTime(0.0, start + 1.0);
+  };
+  player.start();
+  //audioElement.play();
+}
 
 const setup = async () => {
   canvas = document.getElementById('image');
