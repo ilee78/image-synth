@@ -14,8 +14,9 @@ let context2D = null;
 
 const handleStart = (event) => {
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
-  image.onload();
   //let imageData = context2D.getImageData(0, 0, 200, 200);
+  image.crossOrigin = "Anonymous";
+  image.onload();
   console.log(imageData);
   
   let x = 0;
