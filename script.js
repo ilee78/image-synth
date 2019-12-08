@@ -1,10 +1,10 @@
 const context = new AudioContext();
 
 const image = new Image();
-var red = [];
-var green = [];
-var blue = [];
-var alpha = [];
+// var red = [];
+// var green = [];
+// var blue = [];
+// var alpha = [];
 var imageData = new ImageData(200, 200);
 
 let canvas = null;
@@ -25,6 +25,10 @@ image.onload = function() {
 }
 
 const createPixelArrays = (imageData) => {
+   red = [];
+  var green = [];
+  var blue = [];
+  var alpha = [];
   for(let i = 0; i < imageData.length; i += 4) {
     red.push(imageData[i]);
     green.push(imageData[i + 1]);
@@ -32,6 +36,9 @@ const createPixelArrays = (imageData) => {
     alpha.push(imageData[i + 3]);
   }
   console.log(red);
+  console.log(green);
+  console.log(blue);
+  console.log(alpha);
 }
 
 
