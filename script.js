@@ -23,7 +23,6 @@ image.onload = function() {
   context2D.drawImage(image, 0, 0);
   imageData = context2D.getImageData(0, 0, 200, 200).data;
   createPixelArrays(imageData); 
-  
 }
 
 const createPixelArrays = (imageData) => {
@@ -65,6 +64,9 @@ const createPixelArrays = (imageData) => {
     a[i] = alphaAvg;
   }
   const soundModule = new SoundModule(context, r, g, b, a);
+  soundModule.output.connect(context.destination);
+  soundModule.play(r);
+  
   // console.log(r);
   // console.log(g);
   // console.log(b);
