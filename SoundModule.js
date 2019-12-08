@@ -24,9 +24,10 @@ class SoundModule {
     this._metro.onbeat = (start, interval, counter) => {
       if(counter > 400) return;
       console.log(counter);
-      this._notePitch = r[counter] * 10;
+      this._notePitch = (Math.pow(r[counter], 3) / 10000) + 200;
       console.log(this._notePitch);
-      this._osc.frequency.exponentialRampToValueAtTime(this._notePitch, this._context.currentTime + 0.5);     
+      this.
+      //this._osc.frequency.linearRampToValueAtTime(this._notePitch, this._context.currentTime + 0.5);     
     }
 //     const now = this._context.currentTime;
 //     const later = now + 10;
