@@ -24,8 +24,8 @@ let userPick = null;
 
 const chooseImage = (id) => {
   console.log(id);
-  console.log(ImageData[id]);
-  return ImageData[id];
+  //console.log(ImageData[id]);
+  //return ImageData[id];
   // if(event.srcElement.id == "Galaxy") return 'galaxy';
   // if(event.srcElement.id == "Mondrian") return 'mondrian';
   // if(event.srcElement.id == "Seurat") return 'seurat';
@@ -137,10 +137,13 @@ const setup = () => {
   const vanButton = document.querySelector('#Van-Gogh');
   const buttonElement = document.querySelector('#start');
   
-  galaxyButton.addEventListener('click', chooseImage('galaxy'), {once:true});
-  mondrianButton.addEventListener('click', chooseImage('mondrian'), {once:true});
-  seuratButton.addEventListener('click', chooseImage('seurat'), {once:true});
-  vanButton.addEventListener('click', chooseImage('van-gogh'), {once:true});
+  gal
+  
+  
+  // galaxyButton.addEventListener('click', chooseImage('galaxy'), {once:true});
+  // mondrianButton.addEventListener('click', chooseImage('mondrian'), {once:true});
+  // seuratButton.addEventListener('click', chooseImage('seurat'), {once:true});
+  // vanButton.addEventListener('click', chooseImage('van-gogh'), {once:true});
   
   
   //image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
