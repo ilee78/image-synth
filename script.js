@@ -1,13 +1,9 @@
 import SoundModule from './SoundModule.js';
-import TSDataPlayer from './TSDataPlayer.js';
 
 const context = new AudioContext();
 
-const osc = new OscillatorNode(context);
-const amp = new GainNode(context);
-osc.connect(amp).connect(context.destination);
-
-const image = new Image();
+var image = new Image();
+image.crossOrigin = "Anonymous";
 const r = [];
 const g = [];
 const b = [];
@@ -26,10 +22,10 @@ const handleStart = (event) => {
 
 
 image.onload = function() {
-  image.crossOrigin = "Anonymous";
+  //image.crossOrigin = "Anonymous";
   context2D.drawImage(image, 0, 0);
   imageData = context2D.getImageData(0, 0, 200, 200).data;
-  console.log(imageData);
+  //console.log(imageData);
   // createPixelArrays(imageData); 
 }
 
@@ -72,30 +68,17 @@ const createPixelArrays = (imageData) => {
     b[i/100] = blueAvg;
     a[i/100] = alphaAvg;
   }
-  const player = new TSDataPlayer(context, r);
-  playSound(player);
-  // const soundModule = new SoundModule(context, r, g, b, a);
-  // soundModule.output.connect(context.destination);
-  // soundModule.play(r);
+
+  const soundModule = new SoundModule(context, r, g, b, a);
+  soundModule.output.connect(context.destination);
+  soundModule.play(r);
   
-  //console.log(r);
+  console.log(r);
   // console.log(g);
   // console.log(b);
   // console.log(a);
 }
 
-function playSound(player) {
-  player.setBPM(100);
-  player.onbeat = (value, start, duration) => {
-      const parameter = value * 10;
-      osc.frequency.value = parameter;
-      amp.gain.setValueAtTime(0.0, start);
-      amp.gain.linearRampToValueAtTime(0.25, start + 1.0);
-      amp.gain.linearRampToValueAtTime(0.0, start + 1.0);
-  };
-  player.start();
-  //audioElement.play();
-}
 
 const setup = async () => {
   canvas = document.getElementById('image');
@@ -104,7 +87,6 @@ const setup = async () => {
   const buttonElement = document.querySelector('#start');
   
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
-  image.crossOrigin = "Anonymous";
   image.onload();
   
   buttonElement.addEventListener('click', handleStart, {once: true});

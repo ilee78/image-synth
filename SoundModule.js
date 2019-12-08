@@ -21,7 +21,7 @@ class SoundModule {
     
     while(i < r.length) {
       const pitch = r[i];
-      //console.log(r[i]);
+      console.log(r[i]);
       this._notePitch = pitch * 10;
       // console.log(this._notePitch);
       // console.log(later);
