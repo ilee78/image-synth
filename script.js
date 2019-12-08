@@ -22,9 +22,14 @@ let redAnalyzer = null;
 let redContext = null;
 let userPick = null;
 
-const chooseImage = (event) => {
-  //if(event.srcElement.getElementById == "Galaxy") console.log("true");
-  console.log(event.srcElement.id);
+const chooseImage = (id) => {
+  console.log(id);
+  console.log(ImageData[id]);
+  return ImageData[id];
+  // if(event.srcElement.id == "Galaxy") return 'galaxy';
+  // if(event.srcElement.id == "Mondrian") return 'mondrian';
+  // if(event.srcElement.id == "Seurat") return 'seurat';
+  // if(event.srcElement.id == "Van-Gogh") return 'van-gogh';
 }
 
 const handleStart = (event) => {
@@ -132,15 +137,20 @@ const setup = () => {
   const vanButton = document.querySelector('#Van-Gogh');
   const buttonElement = document.querySelector('#start');
   
+  galaxyButton.addEventListener('click', chooseImage('galaxy'), {once:true});
+  mondrianButton.addEventListener('click', chooseImage('mondrian'), {once:true});
+  seuratButton.addEventListener('click', chooseImage('seurat'), {once:true});
+  vanButton.addEventListener('click', chooseImage('van-gogh'), {once:true});
   
   
-  image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
-  image.onload();
+  //image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
+  //image.onload();
   
   redAnalyzer = document.querySelector('#red-analyzer');
   redContext = redAnalyzer.getContext('2d');
   
-  galaxyButton.addEventListener('click', chooseImage, {once:true});
+
+  
 
   
   buttonElement.addEventListener('click', handleStart, {once: true});
