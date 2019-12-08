@@ -9,7 +9,7 @@ class SoundModule {
     this._osc.type = 'sine';
     
     this._metro = new Metronome(this._context);
-    this._metro.setBPM(400);
+    this._metro.setBPM(600);
     
     this.output = new GainNode(this._context);
     this._osc.connect(this._amp).connect(this.output);
@@ -18,7 +18,7 @@ class SoundModule {
     this._osc.frequency.value = this._notePitch;
   }
   
-  play(r) {
+  play(r, g, b) {
     console.log("hello");
     this._metro.start();
     this._metro.onbeat = (start, interval, counter) => {
@@ -27,25 +27,7 @@ class SoundModule {
       this._notePitch = (Math.pow(r[counter], 3) / 10000) + 200;
       console.log(this._notePitch);
       this._osc.frequency.value = this._notePitch;
-      //this._osc.frequency.linearRampToValueAtTime(this._notePitch, this._context.currentTime + 0.5);     
     }
-//     const now = this._context.currentTime;
-//     const later = now + 10;
-//     let i = 0;
-//     //console.log(r);
-    
-//     while(i < r.length) {
-//       const pitch = r[i];
-//       console.log(r[i]);
-//       this._notePitch = pitch * 10;
-//       // console.log(this._notePitch);
-//       // console.log(later);
-//       // console.log(pitch);
-//       this._osc.frequency.linearRampToValueAtTime(this._notePitch, later);
-//       i++;
-//       //if(i > 100) break;
-//     }
-    //console.log(r);
   }
 }
 export default SoundModule;
