@@ -14,10 +14,14 @@ class SoundModule {
   }
   
   play(r) {
+    const now = this._context.currentTime;
+    const later = now + 0.1;
+    while(i <)
     for(let i = 0; i < r.length; i++){
       const pitch = r[i];
       this._notePitch = pitch * 10;
-      
+      this._osc.frequency.linearRampToValueAtTime(this._notePitch, later);
+      console.log(this._notePitch);
     }
     //console.log(r);
   }
