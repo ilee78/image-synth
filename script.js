@@ -1,4 +1,7 @@
+import SoundModule from './SoundModule.js';
+
 const context = new AudioContext();
+
 
 const image = new Image();
 const r = [];
@@ -13,7 +16,6 @@ let context2D = null;
 const handleStart = (event) => {
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
   image.onload();
-
 }
 
 image.onload = function() {
@@ -21,6 +23,7 @@ image.onload = function() {
   context2D.drawImage(image, 0, 0);
   imageData = context2D.getImageData(0, 0, 200, 200).data;
   createPixelArrays(imageData); 
+  
 }
 
 const createPixelArrays = (imageData) => {
@@ -37,7 +40,7 @@ const createPixelArrays = (imageData) => {
     alpha[index] = imageData[i + 3];
   }
   // averaging 100 values at a time
-  for(let i = 0; i < 40000; i += 100) {
+  for(let i = 0; i <= 40000; i += 100) {
     const redSlice = red.slice(i, i + 99);
     const greenSlice = green.slice(i, i + 99);
     const blueSlice = blue.slice(i, i + 99);
@@ -61,10 +64,11 @@ const createPixelArrays = (imageData) => {
     b[i] = blueAvg;
     a[i] = alphaAvg;
   }
-  console.log(r);
-  console.log(g);
-  console.log(b);
-  console.log(a);
+  const soundModule = new SoundModule(context, r, g, b, a);
+  // console.log(r);
+  // console.log(g);
+  // console.log(b);
+  // console.log(a);
 }
 
 
