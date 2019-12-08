@@ -1,4 +1,4 @@
-const ImageData = [
+const ImageMap = [
   {
     key: 'galaxy',
     url: 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586',
@@ -16,4 +16,4 @@ const ImageData = [
     url: 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Fstarry%20night.jpg?v=1575844536516',
   }
 ];
-export default ImageData;
+export default ImageMap;

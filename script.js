@@ -1,5 +1,5 @@
 import SoundModule from './SoundModule.js';
-import ImageData from './ImageData.js';
+import ImageMap from './ImageMap.js';
 
 const context = new AudioContext();
 
@@ -22,15 +22,15 @@ let redAnalyzer = null;
 let redContext = null;
 let userPick = null;
 
-const chooseImage = (id) => {
-  console.log(id);
-  //console.log(ImageData[id]);
-  //return ImageData[id];
-  // if(event.srcElement.id == "Galaxy") return 'galaxy';
-  // if(event.srcElement.id == "Mondrian") return 'mondrian';
-  // if(event.srcElement.id == "Seurat") return 'seurat';
-  // if(event.srcElement.id == "Van-Gogh") return 'van-gogh';
-}
+// const chooseImage = (id) => {
+//   console.log(id);
+//   //console.log(ImageData[id]);
+//   //return ImageData[id];
+//   // if(event.srcElement.id == "Galaxy") return 'galaxy';
+//   // if(event.srcElement.id == "Mondrian") return 'mondrian';
+//   // if(event.srcElement.id == "Seurat") return 'seurat';
+//   // if(event.srcElement.id == "Van-Gogh") return 'van-gogh';
+// }
 
 const handleStart = (event) => {
   console.log(imageData);
@@ -131,13 +131,43 @@ const setup = () => {
   canvas = document.getElementById('image');
   context2D = canvas.getContext('2d');
   
-  const galaxyButton = document.querySelector('#Galaxy');
-  const mondrianButton = document.querySelector('#Mondrian');
-  const seuratButton = document.querySelector('#Seurat');
-  const vanButton = document.querySelector('#Van-Gogh');
+  const galaxyButton = document.getElementById("Galaxy");
+  const mondrianButton = document.getElementById("Mondrian");
+  const seuratButton = document.getElementById("Seurat");
+  const vanButton = document.getElementById("Van-Gogh");
+  
   const buttonElement = document.querySelector('#start');
   
-  gal
+  if(galaxyButton.clicked == true) {
+    image.src = ImageMap['galaxy'];
+    console.log(image.src);
+    image.onload();
+    galaxyButton.disabled = true;
+    mondrianButton.disabled = true;
+    seuratButton.disabled = true;
+    vanButton.disabled = true;
+  } else if(mondrianButton.clicked == true) {
+    image.src = ImageMap['mondrian'];
+    image.onload();
+    galaxyButton.disabled = true;
+    mondrianButton.disabled = true;
+    seuratButton.disabled = true;
+    vanButton.disabled = true;
+  } else if(seuratButton.clicked == true) {
+    image.src = ImageMap['seurat'];
+    image.onload();
+    galaxyButton.disabled = true;
+    mondrianButton.disabled = true;
+    seuratButton.disabled = true;
+    vanButton.disabled = true;
+  } else if(vanButton.clicked == true) {
+    image.src = ImageMap['van-gogh'];
+    image.onload();
+    galaxyButton.disabled = true;
+    mondrianButton.disabled = true;
+    seuratButton.disabled = true;
+    vanButton.disabled = true;
+  }
   
   
   // galaxyButton.addEventListener('click', chooseImage('galaxy'), {once:true});
