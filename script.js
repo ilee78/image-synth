@@ -1,4 +1,5 @@
 import SoundModule from './SoundModule.js';
+import ImageData from './ImageData.js';
 
 const context = new AudioContext();
 
@@ -19,6 +20,10 @@ let context2D = null;
 let redAnalyzer = null;
 let redContext = null;
 
+const chooseImage = (event) => {
+  
+}
+
 const handleStart = (event) => {
   console.log(imageData);
   createPixelArrays(imageData);
@@ -28,11 +33,8 @@ const handleStart = (event) => {
 }
 
 image.onload = function() {
-  //image.crossOrigin = "Anonymous";
   context2D.drawImage(image, 0, 0);
   imageData = context2D.getImageData(0, 0, 200, 200).data;
-  //console.log(imageData);
-  // createPixelArrays(imageData); 
 }
 
 
@@ -117,10 +119,14 @@ const renderWaveform = () => {
   redContext.stroke();
 }
 
-const setup = async () => {
+const setup = () => {
   canvas = document.getElementById('image');
   context2D = canvas.getContext('2d');
   
+  const galaxyButton = document.querySelector('#Galaxy');
+  const mondrianButton = document.querySelector('#Mondrian');
+  const seuratButton = document.querySelector('#Seurat');
+  const vanButton = document.querySelector('#Van-Gogh');
   const buttonElement = document.querySelector('#start');
   
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
@@ -129,8 +135,8 @@ const setup = async () => {
   redAnalyzer = document.querySelector('#red-analyzer');
   redContext = redAnalyzer.getContext('2d');
   
+  galaxyButton.addEventListener('click', chooseImage, {once:true});
   
   buttonElement.addEventListener('click', handleStart, {once: true});
-
 }
 window.addEventListener('load', setup, {once: true});
