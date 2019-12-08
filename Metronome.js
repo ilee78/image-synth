@@ -14,83 +14,61 @@
  **/
 
 /**
- * The class `TSDataPlayer` can be used to drive the trigger function. With
- * given dataset and an AudioContext, the player instance can generate a value
+ * The class `Metronome` can be used to drive the trigger function. With
+ * given BPM and an AudioContext, the metronome instance can generate a value
  * stream that runs on a specified tempo (i.e. beat per minute).
  * 
  * @class
  */
-export default class TSDataPlayer {
-  /**
-   * @constructor
-   * @param {!AudioContext} context 
-   * @param {?Array<Number>} dataset 
-   */
-  constructor(context, dataset) {
+class Metronome {
+  constructor(context) {
     this._context = context;
     this._state = 'stopped';
+
     this._timerId = null;
-    this._boundCallback = this._callback.bind(this)
+    this._counter = 0;
     this.onbeat = null;
+    this._boundCallback = this._callback.bind(this)
     
-    this._dataset = dataset || [];
-    this._dataIndex = 0;
-    
-    this.setBPM(240);
-    this._prevTimestamp = performance.now();
+    this.setBPM(120);
   }
   
-  /**
-   * @private
-   */
-  _callback() {    
+  _callback() {
     const pNow = performance.now();
-    const untilNextScan = (this._prevTimestamp + 2 * this._interval) - pNow;
+    const untilNextScan = (this._prevTimestamp + 2 * this._scanRage) - pNow;
     this._prevTimestamp = pNow;
     
     const now = this._context.currentTime;
     if (this._nextBeat - now < this._scanRange) {
       if (this.onbeat)
-        this.onbeat(this._dataset[this._dataIndex] || null,
-                    this._nextBeat, this._interval);
+        this.onbeat(this._nextBeat, this._interval, this._counter);
       this._nextBeat += this._interval;
-      if (this._dataIndex < this._dataset.length)
-        this._dataIndex++;
-    } 
+      this._counter++;
+    }
     
     this._timerId = setTimeout(this._boundCallback, untilNextScan * 1000);
   }
   
-  /**
-   * Sets the tempo of the data player.
-   * 
-   * @public
-   * @param {!Number} bpm A tempo in beat-per-minute.
-   */
   setBPM(bpm) {
     this._bpm = bpm;
     this._interval = 60 / this._bpm;
     this._scanRange = this._interval;
-    this._nextBeat = this._context.currentTime + this._interval;
   }
   
-  /**
-   * Starts the data player.
-   * 
-   * @public
-   */
+  resetCounter() {
+    this._counter = 0;
+  }
+  
   start() {
+    this._context.resume();
     if (this._state === 'stopped') {
       this._state = 'running';
+      this._prevTimestamp = performance.now() - this._scanRange;
+      this._nextBeat = this._context.currentTime + this._interval;
       this._callback();
     }
   }
-
-  /**
-   * Stops the data player.
-   *
-   * @public
-   */
+  
   stop() {
     if (this._state === 'running') {
       clearTimeout(this._timerId);
@@ -98,3 +76,5 @@ export default class TSDataPlayer {
     }
   }
 }
+
+export default Metronome;

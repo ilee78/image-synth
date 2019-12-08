@@ -1,3 +1,4 @@
+import Metronome from 
 class SoundModule {
   constructor(context, r, g, b, a) {
 
