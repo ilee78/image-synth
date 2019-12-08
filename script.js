@@ -2,6 +2,10 @@ import SoundModule from './SoundModule.js';
 
 const context = new AudioContext();
 
+const ana = new AnalyserNode(context);
+const waveformData = new Float32Array(2048);
+const frequencyData = new Float32Array(2048);
+
 var image = new Image();
 image.crossOrigin = "Anonymous";
 const r = [];
@@ -12,6 +16,8 @@ var imageData = [];
 
 let canvas = null;
 let context2D = null;
+let redAnalyzer = null;
+let redContext = null;
 
 const handleStart = (event) => {
   console.log(imageData);
@@ -19,7 +25,6 @@ const handleStart = (event) => {
   //image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
   //image.onload();
 }
-
 
 image.onload = function() {
   //image.crossOrigin = "Anonymous";
@@ -71,6 +76,7 @@ const createPixelArrays = (imageData) => {
 
   const soundModule = new SoundModule(context, r, g, b, a);
   soundModule.output.connect(context.destination);
+  soundModule.output.connect(ana);
   soundModule.play(r);
   
   console.log(r);
@@ -79,6 +85,36 @@ const createPixelArrays = (imageData) => {
   // console.log(a);
 }
 
+const renderAnalyzer = () => {
+  redContext.clearRect(0, 0, redAnalyzer.width, redAnalyzer.height);
+  renderWaveform();
+  renderSpectrum();
+  requestAnimationFrame(renderAnalyzer);
+}
+
+// Renders the spectrum of the sound from SoundModule output
+const renderSpectrum = () => {
+  ana.getFloatFrequencyData(frequencyData);
+  const inc = analyzer.width / (frequencyData.length * 0.5);
+  contextAnalyzer.beginPath();
+  contextAnalyzer.moveTo(0, analyzer.height);
+  for (let x = 0, i = 0; x < analyzer.width; x += inc, ++i)
+    contextAnalyzer.lineTo(x, -frequencyData[i]);
+  contextAnalyzer.strokeStyle = "#ffffff";
+  contextAnalyzer.stroke();
+}
+
+// Renders the waveform of the sound from EffectModule output
+const renderWaveform = () => {
+  ana.getFloatTimeDomainData(waveformData);
+  const inc = analyzer.width / waveformData.length;
+  contextAnalyzer.beginPath();
+  contextAnalyzer.moveTo(0, analyzer.height * 0.5);
+  for (let x = 0, i = 0; x < analyzer.width; x += inc, ++i)
+    contextAnalyzer.lineTo(x, (waveformData[i] * 0.5 + 0.5) * analyzer.height);
+  contextAnalyzer.strokeStyle = "#ffffff";
+  contextAnalyzer.stroke();
+}
 
 const setup = async () => {
   canvas = document.getElementById('image');
@@ -89,7 +125,11 @@ const setup = async () => {
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
   image.onload();
   
-  buttonElement.addEventListener('click', handleStart, {once: true});
+  redAnalyzer = document.querySelector('#red-analyzer');
+  redContext = redAnalyzer.getContext('2d');
+  
+  
+  buttonElement.addEventListener('click', handleStart, renderAnalyzer, {once: true});
 
 }
 window.addEventListener('load', setup, {once: true});
