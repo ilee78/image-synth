@@ -137,7 +137,7 @@ const setup = () => {
   const vanButton = document.getElementById("Van-Gogh");
   
   const buttonElement = document.querySelector('#start');
-  
+
   if(galaxyButton.clicked == true) {
     image.src = ImageMap['galaxy'];
     console.log(image.src);
@@ -146,7 +146,8 @@ const setup = () => {
     mondrianButton.disabled = true;
     seuratButton.disabled = true;
     vanButton.disabled = true;
-  } else if(mondrianButton.clicked == true) {
+  } 
+  else if(mondrianButton.clicked == true) {
     image.src = ImageMap['mondrian'];
     image.onload();
     galaxyButton.disabled = true;
@@ -170,7 +171,10 @@ const setup = () => {
   }
   
   
-  // galaxyButton.addEventListener('click', chooseImage('galaxy'), {once:true});
+  // galaxyButton.addEventListener('click', function(){
+  //   image.src = ImageMap['galaxy'];
+  //   console.log(ImageMap['galaxy']);
+  // }, {once:true});
   // mondrianButton.addEventListener('click', chooseImage('mondrian'), {once:true});
   // seuratButton.addEventListener('click', chooseImage('seurat'), {once:true});
   // vanButton.addEventListener('click', chooseImage('van-gogh'), {once:true});
