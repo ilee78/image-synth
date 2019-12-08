@@ -35,14 +35,11 @@ class SoundModule {
       this._notePitch = (Math.pow(r[counter], 3) / 10000) + 200;
       //console.log(this._notePitch);
       this._osc.frequency.value = this._notePitch;
-      
-      //this._biquad.frequency.value = 20;
-      //this._biquad.frequency.exponentialRampToValueAtTime(4000, start + 2.0);
-      //this._biquad.frequency.exponentialRampToValueAtTime(20, start + 4.0);
-      this._QValue = b[counter] / 10;
+
+      this._QValue = b[counter] / 20;
       console.log(this._QValue);
       this._biquad.Q.value = this._QValue;
-      //this._biquad.Q.linearRampToValueAtTime(9, start + 2.0);
+
     }
   }
 }

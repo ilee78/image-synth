@@ -80,7 +80,7 @@ const createPixelArrays = (imageData) => {
   soundModule.output.connect(ana);
   soundModule.play(r, g, b);
   
-  console.log(r);
+  //console.log(r);
   // console.log(g);
   // console.log(b);
   // console.log(a);
