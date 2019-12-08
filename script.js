@@ -21,7 +21,7 @@ let redAnalyzer = null;
 let redContext = null;
 
 const chooseImage = (event) => {
-  
+
 }
 
 const handleStart = (event) => {
@@ -135,7 +135,8 @@ const setup = () => {
   redAnalyzer = document.querySelector('#red-analyzer');
   redContext = redAnalyzer.getContext('2d');
   
-  galaxyButton.addEventListener('click', chooseImage, {once:true});
+  //galaxyButton.addEventListener('click', chooseImage("Galaxy"), {once:true});
+
   
   buttonElement.addEventListener('click', handleStart, {once: true});
 }
