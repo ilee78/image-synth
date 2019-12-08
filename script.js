@@ -22,6 +22,7 @@ let redContext = null;
 const handleStart = (event) => {
   console.log(imageData);
   createPixelArrays(imageData);
+  renderAnalyzer();
   //image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
   //image.onload();
 }
@@ -95,25 +96,25 @@ const renderAnalyzer = () => {
 // Renders the spectrum of the sound from SoundModule output
 const renderSpectrum = () => {
   ana.getFloatFrequencyData(frequencyData);
-  const inc = analyzer.width / (frequencyData.length * 0.5);
-  contextAnalyzer.beginPath();
-  contextAnalyzer.moveTo(0, analyzer.height);
-  for (let x = 0, i = 0; x < analyzer.width; x += inc, ++i)
-    contextAnalyzer.lineTo(x, -frequencyData[i]);
-  contextAnalyzer.strokeStyle = "#ffffff";
-  contextAnalyzer.stroke();
+  const inc = redAnalyzer.width / (frequencyData.length * 0.5);
+  redContext.beginPath();
+  redContext.moveTo(0, redAnalyzer.height);
+  for (let x = 0, i = 0; x < redAnalyzer.width; x += inc, ++i)
+    redContext.lineTo(x, -frequencyData[i]);
+  redContext.strokeStyle = "red";
+  redContext.stroke();
 }
 
-// Renders the waveform of the sound from EffectModule output
+// Renders the waveform of the sound from SoundModule output
 const renderWaveform = () => {
   ana.getFloatTimeDomainData(waveformData);
-  const inc = analyzer.width / waveformData.length;
-  contextAnalyzer.beginPath();
-  contextAnalyzer.moveTo(0, analyzer.height * 0.5);
-  for (let x = 0, i = 0; x < analyzer.width; x += inc, ++i)
-    contextAnalyzer.lineTo(x, (waveformData[i] * 0.5 + 0.5) * analyzer.height);
-  contextAnalyzer.strokeStyle = "#ffffff";
-  contextAnalyzer.stroke();
+  const inc = redAnalyzer.width / waveformData.length;
+  redContext.beginPath();
+  redContext.moveTo(0, redAnalyzer.height * 0.5);
+  for (let x = 0, i = 0; x < redAnalyzer.width; x += inc, ++i)
+    redContext.lineTo(x, (waveformData[i] * 0.5 + 0.5) * redAnalyzer.height);
+  redContext.strokeStyle = 'rgba(100,0,0,0.25)';
+  redContext.stroke();
 }
 
 const setup = async () => {
@@ -129,7 +130,7 @@ const setup = async () => {
   redContext = redAnalyzer.getContext('2d');
   
   
-  buttonElement.addEventListener('click', handleStart, renderAnalyzer, {once: true});
+  buttonElement.addEventListener('click', handleStart, {once: true});
 
 }
 window.addEventListener('load', setup, {once: true});
