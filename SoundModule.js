@@ -8,11 +8,21 @@ class SoundModule {
     this._amp = new GainNode(this._context);
     this._osc.type = 'sine';
     
+    this._oscBlue = new OscillatorNode(this._context);
+    this._oscBlue.type = 'sine';
+    
+    this._biquad = new BiquadFilterNode(this._context);
+    this._QValue = null;
+    this._biquad.Q.value = this._QValue;
+    //this._biquad.type = "highpass";
+    
     this._metro = new Metronome(this._context);
-    this._metro.setBPM(600);
+    this._metro.setBPM(2000);
     
     this.output = new GainNode(this._context);
-    this._osc.connect(this._amp).connect(this.output);
+    this._osc.connect(this._biquad).connect(this._amp).connect(this.output);
+    this._oscBlue.connect(this._biquad).connect(this._amp).connect(this.output);
+    this._oscBlue.start();
     this._osc.start();
     this._notePitch = null;
     this._osc.frequency.value = this._notePitch;
@@ -22,11 +32,22 @@ class SoundModule {
     console.log("hello");
     this._metro.start();
     this._metro.onbeat = (start, interval, counter) => {
-      if(counter > 400) return;
-      console.log(counter);
+      if(counter > 400) {
+        this._osc.stop();
+        return;
+      }
+      //console.log(counter);
       this._notePitch = (Math.pow(r[counter], 3) / 10000) + 200;
-      console.log(this._notePitch);
+      //console.log(this._notePitch);
       this._osc.frequency.value = this._notePitch;
+      
+      //this._biquad.frequency.value = 20;
+      //this._biquad.frequency.exponentialRampToValueAtTime(4000, start + 2.0);
+      //this._biquad.frequency.exponentialRampToValueAtTime(20, start + 4.0);
+      this._QValue = b[counter] / 15;
+      console.log(this._QValue);
+      this._biquad.Q.value = this._QValue;
+      //this._biquad.Q.linearRampToValueAtTime(9, start + 2.0);
     }
   }
 }
