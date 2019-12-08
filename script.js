@@ -58,7 +58,7 @@ const createPixelArrays = (imageData) => {
     const greenAvg = greenSum / 100;
     const blueAvg = blueSum / 100;
     const alphaAvg = alphaSum / 100;
-    r[i] = redAvg;
+    r.push(redAvg);
     g[i] = greenAvg;
     b[i] = blueAvg;
     a[i] = alphaAvg;
