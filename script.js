@@ -8,20 +8,21 @@ const r = [];
 const g = [];
 const b = [];
 const a = [];
-var imageData = new ImageData(200, 200);
+//var imageData = [];
 
 let canvas = null;
 let context2D = null;
 
 const handleStart = (event) => {
   image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
-  image.onload();
+  window.onload();
 }
 
 image.onload = function() {
   image.crossOrigin = "Anonymous";
   context2D.drawImage(image, 0, 0);
-  imageData = context2D.getImageData(0, 0, 200, 200).data;
+  const imageData = context2D.getImageData(0, 0, 200, 200).data;
+  console.log(imageData);
   // createPixelArrays(imageData); 
 }
 
@@ -60,15 +61,15 @@ const createPixelArrays = (imageData) => {
     const blueAvg = blueSum / 100;
     const alphaAvg = alphaSum / 100;
     r[i/100] = redAvg;
-    g[i] = greenAvg;
-    b[i] = blueAvg;
-    a[i] = alphaAvg;
+    g[i/100] = greenAvg;
+    b[i/100] = blueAvg;
+    a[i/100] = alphaAvg;
   }
   const soundModule = new SoundModule(context, r, g, b, a);
   soundModule.output.connect(context.destination);
   soundModule.play(r);
   
-  console.log(r);
+  //console.log(r);
   // console.log(g);
   // console.log(b);
   // console.log(a);
@@ -82,6 +83,6 @@ const setup = async () => {
   const buttonElement = document.querySelector('#start');
   buttonElement.addEventListener('click', handleStart, {once: true});
   const loadButton = document.querySelector('#load');
-  loadButton.addEventListener('click', createPixelArray, {once: true});
+  //loadButton.addEventListener('click', handleLoad, {once: true});
 }
 window.addEventListener('load', setup, {once: true});
