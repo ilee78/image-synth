@@ -38,7 +38,6 @@ class SoundModule {
   }
   
   play(r, g, b) {
-    console.log("hello");
     this._metro.start();
     this._metro.onbeat = (start, interval, counter) => {
       if(counter > 400) {
@@ -51,7 +50,6 @@ class SoundModule {
 
       this._depthValue = (g[counter] / 255) - 0.5;
       this._depth.gain.value = this._depthValue;
-      console.log(this._depth.gain.value);
       this._amp.gain.value = 1 - this._depth.gain.value;
       
       this._QValue = b[counter] / 30;
