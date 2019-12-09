@@ -20,24 +20,11 @@ let canvas = null;
 let context2D = null;
 let redAnalyzer = null;
 let redContext = null;
-let userPick = null;
-
-// const chooseImage = (id) => {
-//   console.log(id);
-//   //console.log(ImageData[id]);
-//   //return ImageData[id];
-//   // if(event.srcElement.id == "Galaxy") return 'galaxy';
-//   // if(event.srcElement.id == "Mondrian") return 'mondrian';
-//   // if(event.srcElement.id == "Seurat") return 'seurat';
-//   // if(event.srcElement.id == "Van-Gogh") return 'van-gogh';
-// }
 
 const handleStart = (event) => {
   console.log(imageData);
   createPixelArrays(imageData);
   renderAnalyzer();
-  //image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
-  //image.onload();
 }
 
 image.onload = function() {
@@ -89,11 +76,6 @@ const createPixelArrays = (imageData) => {
   soundModule.output.connect(context.destination);
   soundModule.output.connect(ana);
   soundModule.play(r, g, b);
-  
-  //console.log(r);
-  // console.log(g);
-  // console.log(b);
-  // console.log(a);
 }
 
 const renderAnalyzer = () => {
