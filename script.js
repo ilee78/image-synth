@@ -123,11 +123,11 @@ const renderWaveform = () => {
   redContext.moveTo(0, redAnalyzer.height * 0.5);
   for (let x = 0, i = 0; x < redAnalyzer.width; x += inc, ++i)
     redContext.lineTo(x, (waveformData[i] * 0.5 + 0.5) * redAnalyzer.height);
-  redContext.strokeStyle = 'rgba(100,0,0,0.25)';
+  redContext.strokeStyle = 'rgba(0,0,255,0.25)';
   redContext.stroke();
 }
 
-const setup = () => {
+const setup = async () => {
   canvas = document.getElementById('image');
   context2D = canvas.getContext('2d');
   
@@ -138,58 +138,42 @@ const setup = () => {
   
   const buttonElement = document.querySelector('#start');
 
-  if(galaxyButton.clicked == true) {
-    image.src = ImageMap['galaxy'];
-    console.log(image.src);
+  galaxyButton.addEventListener('click', function(){
+    image.src = ImageMap[0];
     image.onload();
     galaxyButton.disabled = true;
     mondrianButton.disabled = true;
     seuratButton.disabled = true;
     vanButton.disabled = true;
-  } 
-  else if(mondrianButton.clicked == true) {
-    image.src = ImageMap['mondrian'];
+  }, {once:true});
+  mondrianButton.addEventListener('click', function() {
+    image.src = ImageMap[1];
     image.onload();
     galaxyButton.disabled = true;
     mondrianButton.disabled = true;
     seuratButton.disabled = true;
     vanButton.disabled = true;
-  } else if(seuratButton.clicked == true) {
-    image.src = ImageMap['seurat'];
+  }, {once:true});
+  seuratButton.addEventListener('click', function() {
+    image.src = ImageMap[2];
     image.onload();
     galaxyButton.disabled = true;
     mondrianButton.disabled = true;
     seuratButton.disabled = true;
     vanButton.disabled = true;
-  } else if(vanButton.clicked == true) {
-    image.src = ImageMap['van-gogh'];
+  }, {once:true});
+  vanButton.addEventListener('click', function() {
+    image.src = ImageMap[3];
     image.onload();
     galaxyButton.disabled = true;
     mondrianButton.disabled = true;
     seuratButton.disabled = true;
     vanButton.disabled = true;
-  }
-  
-  
-  // galaxyButton.addEventListener('click', function(){
-  //   image.src = ImageMap['galaxy'];
-  //   console.log(ImageMap['galaxy']);
-  // }, {once:true});
-  // mondrianButton.addEventListener('click', chooseImage('mondrian'), {once:true});
-  // seuratButton.addEventListener('click', chooseImage('seurat'), {once:true});
-  // vanButton.addEventListener('click', chooseImage('van-gogh'), {once:true});
-  
-  
-  //image.src = 'https://cdn.glitch.com/e3d07aa6-332d-4c23-83e2-1bb0fee35f02%2Ftestimage.jpg?v=1575693604586';
-  //image.onload();
+  }, {once:true});
   
   redAnalyzer = document.querySelector('#red-analyzer');
   redContext = redAnalyzer.getContext('2d');
-  
 
-  
-
-  
   buttonElement.addEventListener('click', handleStart, {once: true});
 }
 window.addEventListener('load', setup, {once: true});

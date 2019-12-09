@@ -21,7 +21,7 @@ class SoundModule {
     this._biquad.type = "highpass";
     
     this._metro = new Metronome(this._context);
-    this._metro.setBPM(400);
+    this._metro.setBPM(200);
     
     this.output = new GainNode(this._context);
     this._osc.connect(this._biquad).connect(this._amp).connect(this.output);
@@ -31,7 +31,6 @@ class SoundModule {
     this._depthValue = null;
     this._depth.gain.value = this._depthValue;
     this._amp.gain.value = 1 - this._depth.gain.value;
-    
     
     this._osc.start();
     this._lfo.start();
@@ -54,7 +53,7 @@ class SoundModule {
       console.log(this._depth.gain.value);
       this._amp.gain.value = 1 - this._depth.gain.value;
       
-      this._QValue = b[counter] / 20;
+      this._QValue = b[counter] / 30;
       this._biquad.Q.value = this._QValue;
 
     }
