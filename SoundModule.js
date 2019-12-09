@@ -19,7 +19,7 @@ class SoundModule {
     this._biquad = new BiquadFilterNode(this._context);
     this._QValue = null;
     this._biquad.Q.value = this._QValue;
-    this._biquad.type = "highpass";
+    this._biquad.type = "highshelf";
     
     this._metro = new Metronome(this._context);
     this._metro.setBPM(400);
@@ -46,7 +46,7 @@ class SoundModule {
         this._lfo.stop();
         return;
       }
-      this._notePitch = (Math.pow(r[counter], 3) / 10000) + 200;
+      this._notePitch = (Math.pow(r[counter], 2) / 100) + 150;
       this._osc.frequency.value = this._notePitch;
 
       this._depthValue = (g[counter] / 255) - 0.5;
