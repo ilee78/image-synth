@@ -13,6 +13,7 @@ class SoundModule {
     //For green pixel data
     this._lfo = new OscillatorNode(this._context);
     this._depth = new GainNode(this._context);
+    this._lfo.frequency.value = 4;
     
     //For blue pixel data
     this._biquad = new BiquadFilterNode(this._context);
@@ -21,7 +22,7 @@ class SoundModule {
     this._biquad.type = "highpass";
     
     this._metro = new Metronome(this._context);
-    this._metro.setBPM(200);
+    this._metro.setBPM(400);
     
     this.output = new GainNode(this._context);
     this._osc.connect(this._biquad).connect(this._amp).connect(this.output);
@@ -30,7 +31,7 @@ class SoundModule {
     this._osc.frequency.value = this._notePitch;
     this._depthValue = null;
     this._depth.gain.value = this._depthValue;
-    this._amp.gain.value = 1 - this._depth.gain.value;
+    this._amp.gain.value = 1.0 - this._depth.gain.value;
     
     this._osc.start();
     this._lfo.start();
