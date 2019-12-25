@@ -21,18 +21,25 @@ let context2D = null;
 let redAnalyzer = null;
 let redContext = null;
 
+// Handles the event when start button is clicked
+// Separates and organizes pixel data, and passes into SoundModule
+// Renders the waveform analyzer
 const handleStart = (event) => {
-  console.log(imageData);
   createPixelArrays(imageData);
   renderAnalyzer();
 }
 
+// Draws image onto the canvas and reads pixel data into imageData
 image.onload = function() {
   context2D.drawImage(image, 0, 0);
   imageData = context2D.getImageData(0, 0, 200, 200).data;
 }
 
-
+/*
+ * Separates into four different arrays, averages over 100-pixel regions,
+ * and inputs these values into new, condensed arrays. Passes these arrays
+ * into a SoundModule object.
+ */
 const createPixelArrays = (imageData) => {
   // separating into RGBA arrays
   const red = [];
@@ -72,12 +79,17 @@ const createPixelArrays = (imageData) => {
     a[i/100] = alphaAvg;
   }
 
+  // Creates new SoundModule object, makes connections to speakers,
+  // and calls the play function that takes in the respective pixel arrays
   const soundModule = new SoundModule(context, r, g, b, a);
   soundModule.output.connect(context.destination);
   soundModule.output.connect(ana);
   soundModule.play(r, g, b);
 }
 
+// Function that calls rendering of waveform analyzer recursively.
+// Reference credits:
+// https://github.com/ccrma/music220a/blob/master/09-nonlinear-effects/analyser/script.js
 const renderAnalyzer = () => {
   redContext.clearRect(0, 0, redAnalyzer.width, redAnalyzer.height);
   renderWaveform();
@@ -109,6 +121,10 @@ const renderWaveform = () => {
   redContext.stroke();
 }
 
+/*
+ * Creates button elements, adds event listeners, sets up canvas user interface.
+ * Loads user's chosen image and disables all other buttons.
+ */
 const setup = async () => {
   canvas = document.getElementById('image');
   context2D = canvas.getContext('2d');

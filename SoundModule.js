@@ -37,6 +37,11 @@ class SoundModule {
     this._lfo.start();
   }
   
+  /*
+   * Takes in the red, green, and blue pixel data arrays from script.js
+   * Maps red data to frequency, green data to tremolo, blue data to resonance.
+   * Outputs sound to script.js and then speakers.
+   */
   play(r, g, b) {
     this._metro.start();
     this._metro.onbeat = (start, interval, counter) => {
